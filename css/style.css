@@ -46,3 +46,21 @@ body {
 a {
     color: #3498db;
 }
+
+#source-gh {
+    position: absolute;
+    bottom: 10;
+    right: 30;
+    text-decoration: underline;
+    font-size: 20px;
+}
+
+#source-gh:hover {
+    animation: 1s fade-big 1 forwards;
+}
+
+@keyframes fade-big {
+    to {
+        font-size: 22px;
+    }
+}

@@ -1,0 +1,1 @@
+document.getElementById('source-gh').addEventListener('click',()=>window.open('https://github.com/y21/fn-compare'));

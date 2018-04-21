@@ -15,8 +15,10 @@
         </div> <br/>
         <div id="debug">
         </div>
+        <div id="source-gh">View source</div>
     </body>
     <script src="js/compare.min.js"></script> <!-- JavaScript file for Comparator (and CoreComp) class -->
+    <script src="js/misc.js"></script> <!-- Miscellaneous methods and eventlisteners, e.g. view source button -->
     <script>
         document.getElementById('comp').addEventListener('click', () => {
             let stuff = new Comparator(document.getElementById('input1').value, document.getElementById('input2').value, document.getElementById('repeat').value);
