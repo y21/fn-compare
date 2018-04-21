@@ -29,6 +29,9 @@
             .green {
                 color: lightgreen;
             }
+            .red {
+                color: Crimson;
+            }
             #debug {
                 display: none;
             }
@@ -39,15 +42,12 @@
         <textarea id="input2">/* Second code - gets compared with the first code */</textarea>
         <div id="buttons"><br/>
             Execute <input type="number" id="repeat" value="25" /> times <button id="comp">Compare</button>
-        </div>
-        <br/><br/><br/><br/><br/><br/><br/><br/>
+        </div> <br/>
         <div id="debug">
         </div>
     </body>
     <script>
         document.getElementById('comp').addEventListener('click', () => {
-            document.getElementById('debug').style.display = 'block';
-
             let evalInput = [ document.getElementById('input1').value, document.getElementById('input2').value ], evalOutput = [], timestamps = [];
             let fastest = null;
             timestamps[0] = Date.now();
@@ -65,7 +65,9 @@
             timestamps[3] = Date.now();
             if(timestamps[1] - timestamps[0] > timestamps[3] - timestamps[2]) fastest = 2;
             else fastest = 1;
-            document.getElementById('debug').innerHMTL = 'test';
+            document.getElementById('debug').innerHTML = "<span class='" + (fastest==1?"green":"red") + "'>Left code took <b>" + (timestamps[1]-timestamps[0]) + "</b>ms.</span><br/>";
+            document.getElementById('debug').innerHTML += "<span class='" + (fastest==2?"green":"red") + "'>Right code took <b>" + (timestamps[3]-timestamps[2]) + "</b>ms.</span><br/>";
+            document.getElementById('debug').style.display = 'block';
         });
     </script>
 </html>
