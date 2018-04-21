@@ -1,5 +1,5 @@
 class Comparator {
-    constructor(first, second, count){
+    constructor(first, second, count) {
         this._evalInput = {
             left: first,
             right: second
@@ -16,58 +16,64 @@ class Comparator {
         this._fastest;
     }
 
-    get evalInput(){
+    get evalInput() {
         return this._evalInput;
     }
 
-    set evalInput(value){
+    set evalInput(value) {
         return this._evalInput = value;
     }
 
-    get evalOutput(){
+    get evalOutput() {
         return this._evalOutput;
     }
 
-    set evalOutput(value){
+    set evalOutput(value) {
         return this._evalOutput = value;
     }
 
-    get timestamps(){
+    get timestamps() {
         return this._timestamps;
     }
 
-    set timestamps(value){
+    set timestamps(value) {
         return this._timestamps = value;
     }
 
-    get count(){
+    get count() {
         return this._count;
     }
 
-    set count(value){
+    set count(value) {
         return this._count = value;
     }
 
-    execute(count){
-        if(typeof count !== 'undefined' && typeof count !== 'number' && typeof this.count !== 'number' && typeof this.count !== 'undefined') throw new Error('');
-        
-        // Left evaluation procedure
-        this.timestamps.left[0] = Date.now();
-        for(let i = 0; i < count || this.count; ++i){
-            if(i == (count || this.count)) this.evalOutput.left = eval(this.evalInput.left);
-            else eval(this.evalInput.left);
-        }
-        this.timestamps.left[1] = Date.now();
+    execute(count) {
+        return new Promise((resolve, reject) => {
+            // Left evaluation procedure
+            this.timestamps.left[0] = Date.now();
+            for (let i = 0; i < (count || this.count); ++i) {
+                if (i == (count || this.count)) this.evalOutput.left = eval(this.evalInput.left);
+                else eval(this.evalInput.left);
+            }
+            this.timestamps.left[1] = Date.now();
 
-        // Right evaluation procedure
-        this.timestamps.right[0] = Date.now();
-        for(let i = 0; i < count || this.count; ++i){
-            if(i == (count || this.count)) this.evalOutput.right = eval(this.evalOutput.right);
-            else eval(this.evalInput.right)
-        }
-        this.timestamps.right[1] = Date.now();
+            // Right evaluation procedure
+            this.timestamps.right[0] = Date.now();
+            for (let i = 0; i < (count || this.count); ++i) {
+                if (i == (count || this.count)) this.evalOutput.right = eval(this.evalOutput.right);
+                else eval(this.evalInput.right)
+            }
+            this.timestamps.right[1] = Date.now();
 
-        // Check what code is faster
-        this.fastest = (this.timestamps.left[1]-this.timestamps.left[0]>this.timestamps.right[1]-this.timestamps.right[0]) ? 2 : 1;
+            // Check what code is faster
+            this.fastest = (this.timestamps.left[1] - this.timestamps.left[0] > this.timestamps.right[1] - this.timestamps.right[0]) ? 2 : 1;
+            resolve(this.fastest === 1 ? CoreComp.LEFT : CoreComp.RIGHT);
+        });
     }
 }
+
+
+class CoreComp { };
+CoreComp.LEFT = 0x1;
+CoreComp.RIGHT = 0x10;
