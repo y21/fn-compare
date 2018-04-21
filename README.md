@@ -1,2 +1,2 @@
 # fn-compare
-Compare javascript code easily
+Compare speed of javascript methods easily
