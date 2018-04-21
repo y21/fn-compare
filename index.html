@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <meta charset="utf8"/>
+        <style>
+            body {
+                background-color: #002b36;
+                color: white;
+            }
+            #input1 {
+                float: left;
+                width: 49%;
+                height: 50%;
+                background: transparent;
+                color: white;
+            }
+            #input2 {
+                float: right;
+                width: 49%;
+                height: 50%;
+                background: transparent;
+                color: white;
+            }
+            #buttons {
+                clear: both;
+            }
+            #repeat {
+                width: 75px;
+            }
+            .green {
+                color: lightgreen;
+            }
+            #debug {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <textarea id="input1">/* First code */</textarea>
+        <textarea id="input2">/* Second code - gets compared with the first code */</textarea>
+        <div id="buttons"><br/>
+            Execute <input type="number" id="repeat" value="25" /> times <button id="comp">Compare</button>
+        </div>
+        <br/><br/><br/><br/><br/><br/><br/><br/>
+        <div id="debug">
+        </div>
+    </body>
+    <script>
+        document.getElementById('comp').addEventListener('click', () => {
+            document.getElementById('debug').style.display = 'block';
+
+            let evalInput = [ document.getElementById('input1').value, document.getElementById('input2').value ], evalOutput = [], timestamps = [];
+            let fastest = null;
+            timestamps[0] = Date.now();
+            for(let i = 0; i < document.getElementById('repeat').value-1; ++i){
+                if(i == document.getElementById('repeat').value-1) evalOutput[0] = eval(evalInput[0]);
+                else eval(evalInput[0]);
+            }
+            timestamps[1] = Date.now();
+
+            timestamps[2] = Date.now();
+            for(let i = 0; i < document.getElementById('repeat').value-1; ++i){
+                if(i == document.getElementById('repeat').value-1) evalOutput[1] = eval(evalInput[1]);
+                else eval(evalInput[1]);
+            }
+            timestamps[3] = Date.now();
+            if(timestamps[1] - timestamps[0] > timestamps[3] - timestamps[2]) fastest = 2;
+            else fastest = 1;
+            document.getElementById('debug').innerHMTL = 'test';
+        });
+    </script>
+</html>
